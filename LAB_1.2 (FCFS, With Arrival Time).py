@@ -1,34 +1,31 @@
-i, j, k, m = 0, 0, 0, 0
-burstTimes, turnaroundTimes, waitingTimes, arrivalTimes = [], [], [], []
-n = int(input("Enter the number of process: "))
+temp = 0
+burstTimes, turnaroundTimes, waitingTimes, arrivalTimes, completionTimes, process = [], [], [], [], [], []
+n = int(input("Enter the number of process \n"))
 
-print("Enter burst & arrival times of the processes: ")
-while i < n:
+for i in range(n):
+    print("Enter burst time of the process " + str(i + 1))
     burstTime = int(input())
     burstTimes.append(burstTime)
+    print("Enter arrival time of the process " + str(i + 1))
     arrivalTime = int(input())
     arrivalTimes.append(arrivalTime)
-    i += 1
+    process.append("P"+str(i+1))
 
-sort = [x for _,x in sorted(zip(arrivalTimes,burstTimes))]
-turnaroundTimes.append(burstTimes[0])
-temp = burstTimes[0]
-while j < n-1:
-    temp = temp+burstTimes[j+1]
-    turnaroundTimes.append(temp)
-    j += 1
+sortedBurst = [x for _, x in sorted(zip(arrivalTimes, burstTimes))]
+sortedProcess = [x for _, x in sorted(zip(arrivalTimes, process))]
+arrivalTimes.sort()
+for i in range(n):
+    temp = temp + sortedBurst[i]
+    completionTimes.append(temp)
+    turnaroundTimes.append(completionTimes[i] - arrivalTimes[i])
+    waitingTimes.append(turnaroundTimes[i] - sortedBurst[i])
 
-while k < n:
-    waitingTimes.append(turnaroundTimes[k]-burstTimes[k])
-    k += 1
+print("P\t\t\tA.T.\t\tB.T.\t\tT.A.\t\tC.T.\t\tW.T.")
+for i in range(n):
+    print(str(sortedProcess[i]) + "\t\t\t" + str(arrivalTimes[i]) + "\t\t\t" + str(sortedBurst[i]) + "\t\t\t" + str(turnaroundTimes[i]) + "\t\t\t" + str(completionTimes[i]) +"\t\t\t" + str(waitingTimes[i]))
 
-print("P\t\t\tB.T.\t\tT.A.\t\tW.T.")
-while m < int(n):
-    print("P" + str(m + 1) + "\t\t\t" + str(burstTimes[m]) + "\t\t\t" + str(turnaroundTimes[m]) + "\t\t\t" + str(waitingTimes[m]))
-    m += 1
+print("\nAverage Turnaround Time: " + str(sum(turnaroundTimes) / int(n)))
+print("Average Waiting Time: " + str(sum(waitingTimes) / int(n)))
 
-print("\nAverage Burst Time: "+str(sum(burstTimes)/int(n)))
-print("Average Turnaround Time: "+str(sum(turnaroundTimes)/int(n)))
-print("Average Waiting Time: "+str(sum(waitingTimes)/int(n)))
 
 

@@ -1,38 +1,28 @@
-# i, j, k, m, p = 0, 0, 0, 0, 0
-# burstTimes, turnaroundTimes, waitingTimes, arrivalTimes = [], [], [], []
-# n = input("Enter the number of process: ")
-# print("Enter arrival times of the processes: ")
-# while p < int(n):
-#    arrivalTime = input()
-#    arrivalTimes.append(int(arrivalTime))
-#    p += 1
-# print("Enter burst times of the processes: ")
-# while i < int(n):
-#     burstTime = input()
-#     burstTimes.append(int(burstTime))
-#     i += 1
-#
-# dictionary = dict(zip(arrivalTimes, burstTimes))
-# sortedDictionary = sorted(dictionary.items(), key=lambda x: x[0])
-# print(sortedDictionary)
-#
-# turnaroundTimes.append(int(burstTimes[0]))
-# temp = int(burstTimes[0])
-# while j < int(n) - 1:
-#     temp = int(temp) + int(burstTimes[j + 1])
-#     turnaroundTimes.append(temp)
-#     j += 1
-#
-# while k < int(n):
-#     waitingTimes.append(int(turnaroundTimes[k]) - int(burstTimes[k]))
-#     k += 1
-#
-# print("P    " + "B.T.  " + "T.A.  " + "W.T.  ")
-# while m < int(n):
-#     print("P" + str(m + 1) + "    " + str(burstTimes[m]) + "     " + str(turnaroundTimes[m]) + "    " + str(
-#         waitingTimes[m]))
-#     m += 1
-#
-# print("\nAverage Burst Time: " + str(sum(burstTimes) / int(n)))
-# print("Average Turnaround Time: " + str(sum(turnaroundTimes) / int(n)))
-# print("Average Waiting Time: " + str(sum(waitingTimes) / int(n)))
+temp = 0
+burstTimes, turnaroundTimes, waitingTimes, arrivalTimes, completionTimes, process = [], [], [], [], [], []
+n = int(input("Enter the number of process \n"))
+
+for i in range(n):
+    print("Enter burst time of process "+str(i+1))
+    burstTime = int(input())
+    burstTimes.append(burstTime)
+    print("Enter arrival time of the process "+str(i+1))
+    arrivalTime = int(input())
+    arrivalTimes.append(arrivalTime)
+    process.append("P"+str(i+1))
+
+sortedBurst = [x for _, x in sorted(zip(arrivalTimes, burstTimes))]
+sortedProcess = [x for _, x in sorted(zip(arrivalTimes, process))]
+arrivalTimes.sort()
+for i in range(n):
+    temp = temp + sortedBurst[i]
+    completionTimes.append(temp)
+    turnaroundTimes.append(completionTimes[i] - arrivalTimes[i])
+    waitingTimes.append(turnaroundTimes[i] - sortedBurst[i])
+
+print("P\t\t\tA.T.\t\tB.T.\t\tT.A.\t\tC.T.\t\tW.T.")
+for i in range(n):
+    print(str(sortedProcess[i]) + "\t\t\t" + str(arrivalTimes[i]) + "\t\t\t" + str(sortedBurst[i]) + "\t\t\t" + str(turnaroundTimes[i]) + "\t\t\t" + str(completionTimes[i]) +"\t\t\t" + str(waitingTimes[i]))
+
+print("\nAverage Turnaround Time: " + str(sum(turnaroundTimes) / int(n)))
+print("Average Waiting Time: " + str(sum(waitingTimes) / int(n)))

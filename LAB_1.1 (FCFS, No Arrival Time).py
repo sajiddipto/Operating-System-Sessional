@@ -1,30 +1,18 @@
-i, j, k, m = 0, 0, 0, 0
+temp = 0
 burstTimes, turnaroundTimes, waitingTimes = [], [], []
-n = int(input("Enter the number of process: "))
+n = int(input("Enter the number of process \n"))
 
-print("Enter burst times of the processes: ")
-while i < n:
+for i in range(n):
+    print("Enter burst times of the processes "+str(i+1))
     burstTime = int(input())
     burstTimes.append(burstTime)
-    i += 1
-
-turnaroundTimes.append(burstTimes[0])
-temp = burstTimes[0]
-while j < n - 1:
-    temp = temp + burstTimes[j + 1]
+    temp = temp + burstTimes[i]
     turnaroundTimes.append(temp)
-    j += 1
+    waitingTimes.append(turnaroundTimes[i] - burstTimes[i])
 
-while k < n:
-    waitingTimes.append(turnaroundTimes[k] - burstTimes[k])
-    k += 1
+print("P\t\t\tB.T.\t\tT.A.\t\tC.T.\t\tW.T.")
+for i in range(n):
+    print("P" + str(i + 1) + "\t\t\t" + str(burstTimes[i]) + "\t\t\t" + str(turnaroundTimes[i]) + "\t\t\t" +str(turnaroundTimes[i]) + "\t\t\t" + str(waitingTimes[i]))
 
-print("P\t\t\tB.T.\t\tT.A.\t\tW.T.")
-while m < int(n):
-    print("P" + str(m + 1) + "\t\t\t" + str(burstTimes[m]) + "\t\t\t" + str(turnaroundTimes[m]) + "\t\t\t" + str(
-        waitingTimes[m]))
-    m += 1
-
-print("\nAverage Burst Time: " + str(sum(burstTimes) / int(n)))
-print("Average Turnaround Time: " + str(sum(turnaroundTimes) / int(n)))
+print("\nAverage Turnaround Time: " + str(sum(turnaroundTimes) / int(n)))
 print("Average Waiting Time: " + str(sum(waitingTimes) / int(n)))

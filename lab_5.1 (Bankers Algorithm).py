@@ -1,10 +1,12 @@
 processNumber = int(input("Enter the number of processes: "))
 resourceNumber = int(input("Enter the number of resources: "))
 
+
 def calculateNeed(need, maximum, allocated):
     for i in range(processNumber):
         for j in range(resourceNumber):
             need[i][j] = maximum[i][j] - allocated[i][j]
+
 
 def isSafe(available, maximum, allocated):
     need = []
@@ -18,7 +20,7 @@ def isSafe(available, maximum, allocated):
     finish = [0] * processNumber
     safeSeq = [0] * processNumber
     work = [0] * resourceNumber
-    
+
     for i in range(resourceNumber):
         work[i] = available[i]
 
@@ -55,25 +57,25 @@ def isSafe(available, maximum, allocated):
 
 # Driver code
 if __name__ == "__main__":
-    
+
     print("\nEnter the resource allocations of each process: ")
     allocated = []
     for i in range(processNumber):
         al = []
-        print("\nFor P"+str(i))
+        print("\nFor P" + str(i))
         for j in range(resourceNumber):
             al.append(int(input()))
         allocated.append(al)
-    
+
     print("\nEnter the maximum resources of each process: ")
     maximum = []
     for i in range(processNumber):
         mx = []
-        print("\nFor P"+str(i))
+        print("\nFor P" + str(i))
         for j in range(resourceNumber):
             mx.append(int(input()))
         maximum.append(mx)
-    
+
     print("\nEnter the available resources of each process: ")
     available = []
     for i in range(resourceNumber):
